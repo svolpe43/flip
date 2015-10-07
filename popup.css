@@ -1,0 +1,23 @@
+body{
+	height: 500px;
+	width: 500px;
+}
+
+h3{
+	margin: 0;
+	padding: 0;
+}
+
+#groups{
+	padding : 15px;
+}
+
+.remove-group, .remove-link{
+	height: auto;
+	width: 80px;
+}
+
+p{
+	margin: 0;
+	padding: 0;
+}
