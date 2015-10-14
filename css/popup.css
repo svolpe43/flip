@@ -3,9 +3,17 @@ body{
 	width: 500px;
 }
 
-h3{
+h4{
 	margin: 0;
 	padding: 0;
+}
+
+#top-input{
+	overflow: hidden;
+}
+
+#expand-top{
+	display: none;
 }
 
 #groups{
