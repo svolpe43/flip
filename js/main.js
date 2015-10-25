@@ -2,7 +2,19 @@
  *  Flipper
  */
 
+
+ /*
+    todo
+    - saving input for populating on next popup open
+    - changing location of link info to remove parentNode x2
+    - right click menu for all the crud options
+        - easy way to pass html data
+        - can add edit on without getting cluttered looking
+    - get the selects working
+ */
+
 var groups = [];
+var logging = false;
 
 // need a group object
 function Group(name, path){
@@ -38,8 +50,16 @@ function saveData() {
 function getData() {
   // Save it using the Chrome extension storage API.
   chrome.storage.sync.get("data", function(data) {
-    console.log('Retrieving..');
     groups = data.data;
     render();
   });
 }
+
+// func: message; name path 
+function flog(message, data){
+    var str = "func: " + message + ";";
+    for(var i = 0; i < data.length; i++)
+        str += " " + data[i];
+    console.log(str);
+}
+

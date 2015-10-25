@@ -1,26 +1,37 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Flipper</title>
-    <script src="js/crud.js"></script>
+    
+    <link href="css/index.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
+
+    <script src="js/actions.js"></script>
     <script src="js/main.js"></script>
     <script src="js/render.js"></script>
-    <link href="css/popup.css" rel="stylesheet"/>
   </head>
   <body>
-    <div id="top-input">
-      <div id="group-input">
-          <input class="inline" id="group-name" type="text" placeholder="Group Name">
-          <input class="inline" id="group-path" type="text" placeholder="Group Path">
-          <input class="inline" id="add-group" type="submit" value="Submit Group">
-      </div>
-      <div id="link-input">
-          <input class="inline" id="link-name" type="text" placeholder="Link Name">
-          <input class="inline" id="link-path" type="text" placeholder="Link Path">
-          <select id="link-group"></select>
-          <input class="inline" id="add-link" type="submit" value="Submit Link">
-      </div>
-      <button id="collapse-top">Collapse</button>
+    <div id="input">
+        <div id="top-input">
+            <div id="group-input">
+                <input id="group-name" type="text" placeholder="Group Name">
+                <input id="group-path" type="text" placeholder="Group Path">
+                <button id="add-group" type="button">Submit</button>
+            </div>
+            <div id="link-input">
+                <input id="link-name" type="text" placeholder="Link Name">
+                <input id="link-path" type="text" placeholder="Link Path">
+                <select id="link-group"></select>
+                <button id="add-link" type="button">Submit</button>
+            </div>
+            <span id="collapse-top">Collapse</span>
+        </div>
+        <span id="expand-top">Expand</span>
     </div>
     <button id="expand-top">Expand</button>
 

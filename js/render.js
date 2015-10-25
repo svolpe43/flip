@@ -5,7 +5,7 @@
 
 // renders a list of groups and their links
 function render(){
-    console.log("Rendering..")
+    console.log("rendering..");
 
     // find the groups div
     var groups_div = document.getElementById("groups");
@@ -34,35 +34,46 @@ function linkGroupSelect(){
 
 // creates an html string for a single group
 function drawGroup(group_index){
-    console.log("Drawing group..");
-    var html = "";
-    html += "<div id='group-" + group_index + "'>";
-    html += "<h4>" + groups[group_index].name + "</h4>";
-    html += '<button class="remove-group">X</button>'
-    html += "<p>" + groups[group_index].path + "</p>";
-    html += '<button class="select-group">Select</button>';
-    html += '<div class="links">';
+    var html = "<div class='group' id='group-" + group_index + "'>";
+    html += "<h4 class='select-group'>" + groups[group_index].name + "</h4>";
+    html += "<p class='group-path'>" + groups[group_index].path + "</p>";
+    html += '<img class="remove-group" src="res/cross.png" alt="Remove">';
+    html += '<img class="edit-group" src="res/check.png" alt="Edit">';
 
     // draw all the links
-    html += "<div id='group-links'><ul>"
+    html += "<div class='links'>"
     for (var j = 0, len = groups[group_index].links.length; j < len; j++) {
         html += drawLink(group_index, j);
     }
-    html += "</div></div></div>";
+    html += "</div></div>";
 
     return html;
 }
 
 // creates html string for a single link
 function drawLink(group_index, link_index){
-    console.log(groups, group_index, link_index);
-    console.log(groups[group_index]);
-    var html = "";
-    html += '<button class="remove-link">Remove</button>';
-    html += '<h6>' + groups[group_index].links[link_index].name + '</h6>';
-    html += '<p>' + groups[group_index].links[link_index].path + '</p>';
-    html += '<button class="select-link">Select</button>';
-    html += "</div>";
+    var html = '<div class="link" id="link-' + group_index + '-' + link_index + '">';
+    html += '<div class="link-title">';
+    html += '<h5 class="link-name select-link">' + groups[group_index].links[link_index].name + '</h5>';
+    html += '<img class="remove-link" src="res/cross.png" alt="Remove">';
+    html += '<img class="edit-link" src="res/check.png" alt="Edit">';
+    html += "</div></div>";
+    return html;
+}
+
+function drawGroupInput(group){
+    html = '<input id="edit-group-name" type="text" value="' + groups[group].name + '">';
+    html += '<input id="edit-group-path" type="text" value="' + groups[group].path + '">';
+    html += '<button class="submit-edit-group" id="' + group + '" type="button">Submit</button>';
+    html += '<button class="submit-edit-group" id="' + group + '" type="button">Cancel</button>';
+    return html;
+}
+
+function drawLinkInput(indexes){
+    html = '<input id="edit-link-name" type="text" value="' + groups[indexes.group].links[indexes.link].name + '">';
+    html += '<input id="edit-link-path" type="text" value="' + groups[indexes.group].links[indexes.link].path + '">';
+    html += '<button class="submit-edit-link" id="' + indexes.group + '-' + indexes.link + '" type="button">Submit</button>';
+    html += '<button class="submit-edit-link" id="' + indexes.group + '-' + indexes.link + '" type="button">Cancel</button>';
     return html;
 }
 
@@ -87,28 +98,22 @@ function setListeners(){
     // set link
     var select_link = document.getElementsByClassName('select-link');
     for(i = 0; i < select_link.length; i++) {
-        select_link[i].addEventListener('click', function(){
-          var info = this.id.split("-");
-          selectLink(info[0], info[1])
-        }, false);
+        select_link[i].addEventListener('click', selectLink);
     }
 
     // remove group
     var remove_group = document.getElementsByClassName('remove-group');
     for(i = 0; i < remove_group.length; i++) {
-        remove_group[i].addEventListener('click', function(){
-          removeGroup(this.id);
-        }, false);
+        remove_group[i].addEventListener('click', removeGroup);
     }
 
     // remove link
     var remove_link = document.getElementsByClassName('remove-link');
     for(i = 0; i < remove_link.length; i++) {
-        remove_link[i].addEventListener('click', function(){
-          var info = this.id.split("-");
-          removeLink(info[0], info[1]);
-        }, false);
+        remove_link[i].addEventListener('click', removeLink);
     }
+
+    setEditListeners();
 
     // set the collapse listener
     var collapse_button = document.getElementById("collapse-top");
@@ -117,6 +122,31 @@ function setListeners(){
     // set the expand listener
     var expand_button = document.getElementById("expand-top");
     expand_button.addEventListener('click', expandTop);
+}
+
+function setEditSubmitListeners(){
+    // groups
+    var submit_edit_group = document.getElementsByClassName('submit-edit-group')[0];
+    console.log(submit_edit_group);
+    if(submit_edit_group) submit_edit_group.addEventListener('click', editGroup);
+
+    // links
+    var submit_edit_link = document.getElementsByClassName('submit-edit-link')[0];
+    if(submit_edit_link) submit_edit_link.addEventListener('click', editLink);
+}
+
+function setEditListeners(){
+    // groups
+    var edit_group = document.getElementsByClassName('edit-group');
+    for(i = 0; i < edit_group.length; i++) {
+        edit_group[i].addEventListener('click', editGroupMode);
+    }
+
+    // links
+    var edit_link = document.getElementsByClassName('edit-link');
+    for(i = 0; i < edit_link.length; i++) {
+        edit_link[i].addEventListener('click', editLinkMode);
+    }
 }
 
 // expand the top
