@@ -1,17 +1,8 @@
 /*
- *  Flipper
- *  A super cool way to store a chrome workspace
+ *  popup.js
+ *
+ *  This file is contains all the code to control the popup.
  */
-
-/* Use?
-var groups_div;
-var link_input_groups_div;
-
-function GroupsDiv(groups_div){
-    this.div = groups_div;
-    //rows - groups, col - links
-    this.groups = [][];
-}*/
 
 var expanded = false;
 var link_input_div;
@@ -43,10 +34,14 @@ function groupOptions(){
 }
 
 function drawGroups(){
-    var html = "";
-    for (var i = 0; i < groups.length; i++)
-        html += drawGroup(i);
-    return html;
+    if(groups.length > 0){
+        var html = "";
+        for (var i = 0; i < groups.length; i++)
+            html += drawGroup(i);
+        return html;
+    }else{
+        return "";
+    }
 }
 
 // creates an html string for a single group
@@ -69,6 +64,10 @@ function drawGroup(group_index){
 
 // creates html string for a single link
 function drawLink(group_index, link_index){
+    // why the fuck do we need this
+    if(groups[group_index].links[link_index] == null){
+        return "";
+    }
     var html = '<div class="link" id="link-' + group_index + '-' + link_index + '">';
     html += '<h5 class="link-name select-link">' + groups[group_index].links[link_index].name + '</h5>';
     html += '<img class="remove-link" src="res/cross.png" alt="Remove">';

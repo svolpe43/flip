@@ -1,21 +1,14 @@
 /*
- *  Flipper
+ *  main.js
+ *  
+ *  This is the main page for a given popup instance.
+ *  It creates and initiates the enviorment.
  */
 
- /*
-    todo
-    - saving input for populating on next popup open
-    - get the selects working
-    - open a tab for ever damn link open (this means you have the group open). Selects set active.
-    - hook up hot keys
-        - on proc do something similar as ghostly as an alert of the url and name
-    - jira integration for automatic group create based on current sprint
- */
-
-var groups = [];
 var logging = false;
 var curEditGroup = null;
 var curEditLink = null;
+var groups = [];
 
 // need a group object
 function Group(name, path){
@@ -33,12 +26,12 @@ function Link(name, path){
   this.full_url = "";
 }
 
- function EditGroup(div, group){
+function EditGroup(div, group){
     this.div = div;
     this.group = group;
  }
 
- function EditLink(div, group, link){
+function EditLink(div, group, link){
     this.div = div;
     this.group = group;
     this.link = link;
@@ -47,7 +40,7 @@ function Link(name, path){
 // vanilla js
 document.addEventListener('DOMContentLoaded', function() {
     // retrieve the data also calls render
-    getData();
+    getGroups();
     getTopElements();
 
     // catch the hotkeys
@@ -55,29 +48,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Command:', command);
     });
 });
-
-// save data to to chrome cross device storage
-function saveData() {
-  // Save it using the Chrome extension storage API.
-  chrome.storage.sync.set({'data': groups}, function() {
-    console.log('Saved');
-  });
-}
-
-// get data from chrome cross device storage
-function getData() {
-  // Save it using the Chrome extension storage API.
-  chrome.storage.sync.get("data", function(data) {
-    groups = data.data;
-    render();
-  });
-}
-
-// func: message; name path 
-function flog(message, data){
-    var str = "func: " + message + ";";
-    for(var i = 0; i < data.length; i++)
-        str += " " + data[i];
-    console.log(str);
-}
 
