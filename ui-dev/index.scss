@@ -1,68 +1,80 @@
 /* Framework */
-$dblue: #1f375f;
-$bg: #17181b;
+$input: #9A8EB8;
+$text: #B5C4D0;
+$background: #393939;
 $grey: #727272;
-$blue: #2c6fd3;
-$lbg: #2E2F32;
+
+$rale: 'Raleway', sans-serif;
+$jura: 'Jura', sans-serif;
 
 html{
 	margin: 0;
 	padding: 0;
 	background: #000;
-	font-family: 'Economica', sans-serif;
 
 	/* This will simulate the optimal size for a chrome popup */
 	body{
 		height: 500px;
 		width: 500px;
-		background: $lbg;
+		background: $background;
 		float: left;
-		color: $blue;
-		
-		#input{
-			padding: 15px;
-			width: 100%;
-			height: 15%;
-		}
-
-		#groups{
-			margin-top: 20px;
-			width: 100%;
-			height: 85%;
-		}
-
-		.img{
-			margin: 0 !important;
-			padding: 0 !important;
-		}
+		color: $text;
 	}
 }
 
-/*Content*/
+h5, h4, p{
+	font-family: 'Jura', sans-serif !important;
+	margin: 0 !important;
+	padding: 0px 5px !important;
+	float: left;
+	overflow: hidden;
+}
 
-#expand-top{
-	display: none;
+.img{
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/*Content*/
+#bar{
+	overflow: hidden;
+	background: #1F1F1F;
+	height: 30px;
+
+	#input-controls{
+		float: right;
+		padding: 5px 5px;
+		overflow: hidden;
+		p{
+			margin: 5px;
+		}
+		p:hover {
+			background: #303030;
+		}
+	}
+
+	#title{
+		padding: 5px 5px;
+		height: 100%;
+		float: left;
+	}
+}
+
+#groups{
+	margin: 10px 5px;
 }
 
 .group{
 	padding: 5px;
-	margin: 5px;
-
-	h5, h4, p{
-		margin: 0 !important;
-		padding: 0px 5px !important;
-		float: left;
-	}
 }
 
 .group:hover{
 	background: #454649;
 }
 
-.inline{
-	margin: 0 !important;
-	padding: 0px 5px !important;
-	float: left;
+#group-input, #link-input{
+	padding : 5px;
+	display: none;
 }
 
 .links{
@@ -77,31 +89,61 @@ html{
 .link{
 	overflow: hidden;
 	margin: 3px 0px;
+	height: auto;
 }
 
 .link:hover{
 	color: #fff;
 }
 
-.link-title{
-	height: 12px;
-	margin: 0;
-	padding: 0;
-}
-
-.remove-group{
+.remove-group, .edit-group, .remove-link, .edit-link{
 	height: 10px;
 	width: 10px;
 }
 
-.remove-link{
-	height: 10px;
-	width: 10px;
+.input{
+	width: 37%;
+	margin-right: 10px;
+	background: $background;
+	border-style: none none solid solid;
+	border-color: $input;
+	border-width: 1px;
+	color: $input;
+	font-size: 12px;
+	font-family: 'Jura', sans-serif !important;
 }
 
-.select-link{
-	height: 10px;
-	width: 10px;
+.but{
+	position: relative;
+	vertical-align: top;
+	height: 20px;
+	padding: 1px 5px;
+	font-size: 10px;
+	color: #000;
+	text-align: center;
+	background: #859596;
+	border: 0;
+	font-family: 'Jura', sans-serif !important;
 }
 
+.inline{
+	margin: 0 !important;
+	padding: 0px 5px !important;
+	float: left;
+}
 
+::-webkit-input-placeholder {
+   color: $input;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $input;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $input;  
+}
+
+:-ms-input-placeholder {  
+   color: $input;  
+}

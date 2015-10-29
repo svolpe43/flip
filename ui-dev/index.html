@@ -4,62 +4,63 @@
 
     <title>Flipper</title>
     
-    <link href="css/index.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <link href="http://fonts.googleapis.com/css?family=Economica" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Jura:400,300|Raleway:400,300' rel='stylesheet' type='text/css'>
 
-    <script src="js/actions.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/render.js"></script>
+    <script src="index.js"></script>
   </head>
   <body>
     <div id="input">
-        <div id="top-input">
-            <div id="group-input">
-                <input id="group-name" type="text" placeholder="Group Name">
-                <input id="group-path" type="text" placeholder="Group Path">
-                <button id="add-group" type="button">Submit</button>
-            </div>
-            <div id="link-input">
-                <input id="link-name" type="text" placeholder="Link Name">
-                <input id="link-path" type="text" placeholder="Link Path">
-                <select id="link-group"><option value="0">Github5</option><option value="1">Jenkins</option></select>
-                <button id="add-link" type="button">Submit</button>
-            </div>
-            <span id="collapse-top">Collapse</span>
+        <div id="group-input">
+            <input  class="input" id="group-name" type="text" placeholder="Group Name">
+            <input  class="input" id="group-path" type="text" placeholder="Group Path">
+            <button class="but" id="add-group" type="button">Submit</button>
         </div>
-        <span id="expand-top">Expand</span>
+        <div id="link-input">
+            <input  class="input" id="link-name" type="text" placeholder="Link Name">
+            <input  class="input" id="link-path" type="text" placeholder="Link Path">
+            <select id="link-group"><option value="0">Github5</option><option value="1">Jenkins</option></select>
+            <button class="but" id="add-link" type="button">Submit</button>
+        </div>
     </div>
-    <button id="expand-top">Expand</button>
-
+    <div id="bar">
+        <div id="title">
+            <h4>Flipper</h4>
+        </div>
+        <div id="input-controls">
+            <p id="collapse-top">Add Group</p>
+            <p id="expand-top">Add Link</p>
+            <p id="close-top">Close</p>
+        </div>
+    </div>
+    
     <!-- list of groups -->
     <div id="groups">
         <div class="group" id="group-0">
-            <input id="edit-group-name" type="text" value="Github5">
-            <input id="edit-group-path" type="text" value="https://github.com/acquia">
-            <button class="submit-edit-group" id="0" type="button">Submit</button>
-            <button class="submit-edit-group" id="0" type="button">Cancel</button>
+            <input class="input" id="edit-group-name" type="text" value="Github5">
+            <input class="input" id="edit-group-path" type="text" value="https://github.com/acquia">
+            <button class="but submit-edit-group" id="0" type="button">Submit</button>
+            <button class="but submit-edit-group" id="0" type="button">Cancel</button>
         </div>
         <div class="group" id="group-1">
             <h4 class="select-group">Jenkins</h4>
             <p class="group-path">https://ci.acquia.com/</p>
-            <img class="remove-group" src="res/cross.png" alt="Remove">
-            <img class="edit-group" src="res/check.png" alt="Edit">
+            <img class="remove-group" src="cross.png" alt="Remove">
+            <img class="edit-group" src="check.png" alt="Edit">
             <div class="links">
                 <div class="link" id="link-1-0">
-                    <div class="link-title">
-                        <h5 class="link-name select-link">gov-create-job</h5>
-                        <img class="remove-link" src="res/cross.png" alt="Remove">
-                        <img class="edit-link" src="res/check.png" alt="Edit">
-                    </div>
+                    <h5 class="link-name select-link">gov-create-job</h5>
+                    <img class="remove-link" src="cross.png" alt="Remove">
+                    <img class="edit-link" src="check.png" alt="Edit">
                 </div>
                 <div class="link" id="link-1-1">
                     <div class="link-title">
-                        <input id="edit-link-name" type="text" value="gov-set-deds">
-                        <input id="edit-link-path" type="text" value="https://ci.acquia.com/view/Search/job/acquia-governor-setup-deds/">
-                        <button class="submit-edit-link" id="1-1" type="button">Submit</button>
-                        <button class="submit-edit-link" id="1-1" type="button">Cancel</button>
+                        <input  class="input" id="input edit-link-name" type="text" value="gov-set-deds">
+                        <input  class="input" id="input edit-link-path" type="text" value="https://ci.acquia.com/view/Search/job/acquia-governor-setup-deds/">
+                        <button class="but submit-edit-link" id="1-1" type="button">Submit</button>
+                        <button class="but submit-edit-link" id="1-1" type="button">Cancel</button>
                     </div>
                 </div>
             </div>

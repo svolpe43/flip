@@ -35,20 +35,3 @@ chrome.commands.onCommand.addListener(function(command) {
     }
   }
 }
-
-<div id="groups">
-    <div id="group-GROUPID">
-        <button class="remove-group">Remove Group</button>
-        <h3>Group Name</h3>
-        <p>Group Path</p>
-        <button class="select-group">Select Group</button>
-        <div class="links">
-            <div id="link-GROUPID-LINKID">
-                <button class="remove-link">Remove Link</button>
-                <h6>Link Name</h6>
-                <p>Link Path</p>
-                <button class="select-link">Select Link</button>
-            </div>  
-        </div>
-    </div>
-</div>

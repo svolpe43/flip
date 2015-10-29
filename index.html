@@ -9,31 +9,39 @@
     <link href="css/index.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Jura:400,300' rel='stylesheet' type='text/css'>
 
+    <script src="js/popup.js"></script>
     <script src="js/actions.js"></script>
+    <script src="js/listeners.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/render.js"></script>
   </head>
   <body>
     <div id="input">
-        <div id="top-input">
-            <div id="group-input">
-                <input id="group-name" type="text" placeholder="Group Name">
-                <input id="group-path" type="text" placeholder="Group Path">
-                <button id="add-group" type="button">Submit</button>
-            </div>
-            <div id="link-input">
-                <input id="link-name" type="text" placeholder="Link Name">
-                <input id="link-path" type="text" placeholder="Link Path">
-                <select id="link-group"></select>
-                <button id="add-link" type="button">Submit</button>
-            </div>
-            <span id="collapse-top">Collapse</span>
+        <div id="group-input">
+            <h4>Add Group</h4>
+            <input  class="input" id="group-name" type="text" placeholder="Group Name">
+            <input  class="input" id="group-path" type="text" placeholder="Group Path">
+            <button id="add-group" type="button">Submit</button>
         </div>
-        <span id="expand-top">Expand</span>
+        <div id="link-input">
+            <h4>Add Link</h4>
+            <input  class="input" id="link-name" type="text" placeholder="Link Name">
+            <input  class="input" id="link-path" type="text" placeholder="Link Path">
+            <select id="link-group"></select>
+            <button id="add-link" type="button">Submit</button>
+        </div>
     </div>
-    <button id="expand-top">Expand</button>
+    <div id="bar">
+        <div id="title">
+            <h4>Flipper</h4>
+        </div>
+        <div id="input-controls">
+            <p id="show-add-group">Add Group</p>
+            <p id="show-add-link">Add Link</p>
+            <p id="close-top">Close</p>
+        </div>
+    </div>
 
     <!-- list of groups -->
     <div id="groups"></div>
