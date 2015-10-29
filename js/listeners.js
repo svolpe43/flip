@@ -1,3 +1,12 @@
+/*
+ *  listeners.js
+ *
+ *  This file extracts all the ugly stuff taht you have to do
+ *  inside of a chrome extension. There is no inline js(onclick),
+ *  so this is necessary.
+ */
+
+
 // make sure all the listeners are hooked up
 function setListeners(){
     console.log("Setting listeners..");
