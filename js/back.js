@@ -6,9 +6,6 @@
  * 	This process is the only communication to chrome's cross device storage.
  */
 
- var UP = 0;
- var DOWN = 1;
-
 var groups = [];
 var cur_group = -1;
 var cur_link = -1;
@@ -37,7 +34,6 @@ function CurrentStatus(group, link){
 
 // setup the envirorment
 function start(){
-	console.log("now");
 	getChromeData();
 
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -70,9 +66,7 @@ function activateTab(data, tab_id){
 
 function alterTab(data, tab_id){
     chrome.tabs.get(groups[data.gindex].tabId, function(tab){
-        if(chrome.runtime.lastError)
-            console.log("Tab don't exist.");
-        else{
+        if(!chrome.runtime.lastError){
             chrome.tabs.update(tab.id, {
                 active: true,
                 url: groups[data.gindex].links[data.lindex].path
