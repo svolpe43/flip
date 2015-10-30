@@ -15,7 +15,34 @@
     "tabs"
   ],
   "commands": {
-
+    "cycle-groups-up": {
+      "suggested_key": {
+        "default": "Ctrl+1",
+        "mac": "MacCtrl+1"
+      },
+      "description": "Cycle the active group up one."
+    },
+    "cycle-groups-down": {
+      "suggested_key": {
+        "default": "Ctrl+2",
+        "mac": "MacCtrl+2"
+      },
+      "description": "Cycle the active group down one."
+    },
+    "cycle-links-up": {
+      "suggested_key": {
+        "default": "Ctrl+Q",
+        "mac": "MacCtrl+Q"
+      },
+      "description": "Cycle the active link up one."
+    },
+    "cycle-links-down": {
+      "suggested_key": {
+        "default": "Ctrl+W",
+        "mac": "MacCtrl+W"
+      },
+      "description": "Cycle the active link down one."
+    }
   },
   "background": {
     "scripts": ["js/back.js"]

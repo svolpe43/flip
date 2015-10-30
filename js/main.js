@@ -42,10 +42,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // retrieve the data also calls render
     getGroups();
     getTopElements();
-
-    // catch the hotkeys
-    chrome.commands.onCommand.addListener(function(command) {
-        console.log('Command:', command);
-    });
 });
 
