@@ -16,7 +16,7 @@ function Group(name, path){
   this.links = [];
   this.path = path;
   this.name = name
-  this.tabId = -1;
+  this.tabId = 0;
   this.activeLink = 0;
 }
 
@@ -139,11 +139,8 @@ function addLink(data){
 // select group - if the tab for that group doesnt exist create one and set the url
 function selectGroup(data){
     var tab_id = groups[data.gindex].tabId;
-    if(tab_id != -1){
-        activateTab(data, tab_id)
-    }else{
-        createTab(data)
-    }
+    
+    activateTab(data, tab_id);
 
     cur_group = data.gindex;
     cur_link = data.lindex;
@@ -151,15 +148,10 @@ function selectGroup(data){
 
 // changes the groups coresponding tab to the url specified by link
 function selectLink(data){
-
     var url = groups[data.gindex].links[data.lindex].path;
     var tab_id = groups[data.gindex].tabId;
 
-    if(tab_id == -1){
-        alert("That group doesn't have a tab open.");
-    }else{
-        alterTab(data, tab_id);
-    }
+    alterTab(data, tab_id);
 
     cur_group = data.gindex;
     cur_link = data.lindex;
@@ -242,7 +234,7 @@ function cycleLinks(direction){
         }
     }else if(direction =="down"){
         if(cur_link == -1){
-
+            cur_link = 0;
         }else if(cur_link == 0){
             cur_link = groups[cur_group].links.length - 1;
         } else{
@@ -259,7 +251,6 @@ function cycleLinks(direction){
         gindex: cur_group,
         lindex: cur_link
     }, groups[cur_group].tabId);
-
 }
 
 function h(){

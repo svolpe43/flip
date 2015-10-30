@@ -2,10 +2,9 @@
 html {
   margin: 0;
   padding: 0;
-  background: #000;
+  background: #393939;
   /* This will simulate the optimal size for a chrome popup */ }
   html body {
-    height: 500px;
     width: 500px;
     background: #393939;
     float: left;
@@ -67,7 +66,7 @@ h5, h4, p {
     float: left; }
 
 #groups {
-  margin: 10px 5px; }
+  margin: 10px 10px 20px 10px; }
 
 .group {
   padding-top: 8px; }

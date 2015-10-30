@@ -15,15 +15,14 @@ function Group(name, path){
   this.links = [];
   this.path = path;
   this.name = name
-  this.tabId = -1;
-  this.activeLink = "";
+  this.tabId = 0;
+  this.activeLink = 0;
 }
 
 // need a link object?
 function Link(name, path){
   this.name = name;
   this.path = path;
-  this.full_url = "";
 }
 
 function EditGroup(div, group){
