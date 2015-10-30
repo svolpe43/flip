@@ -40,7 +40,7 @@ function drawGroups(){
             html += drawGroup(i);
         return html;
     }else{
-        return "";
+        return "null bitch";
     }
 }
 
@@ -66,7 +66,7 @@ function drawGroup(group_index){
 function drawLink(group_index, link_index){
     // why the fuck do we need this
     if(groups[group_index].links[link_index] == null){
-        return "";
+        return "null bitch";
     }
     var html = '<div class="link" id="link-' + group_index + '-' + link_index + '">';
     html += '<h5 class="link-name select-link">' + groups[group_index].links[link_index].name + '</h5>';

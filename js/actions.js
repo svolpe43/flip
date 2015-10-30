@@ -9,6 +9,7 @@ function request(data){
     chrome.runtime.sendMessage(data, function(response) {
         if(response != null){
             groups = response;
+            console.log(groups);
         }
         render();
     });
