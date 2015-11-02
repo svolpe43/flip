@@ -6,9 +6,11 @@
  * 	This process is the only communication to chrome's cross device storage.
  */
 
+var NOTI_DURATION;
+
 var groups = [];
-var cur_group = -1;
-var cur_link = -1;
+var cur_group = 0;
+var cur_link = 0;
 
 start();
 
@@ -191,26 +193,24 @@ function handleHotKeys(command){
 }
 
 function cycleGroups(direction){
-    if(groups.length < 1){
+    if(groups.length < 1)
         return;
-    }
 
     if(direction == "up"){
-        if(cur_group == -1 || cur_group >= groups.length - 1){
+        if(cur_group >= groups.length - 1){
             cur_group = 0;
         } else{
             cur_group++;
         }
     }else if(direction =="down"){
-        if(cur_group == -1){
-            cur_group = 0;
-        }else if(cur_group == 0){
+        if(cur_group == 0){
             cur_group = groups.length - 1;
         } else{
             cur_group--;
         }
     }
 
+    h();
     activateTab({
         gindex: cur_group
     }, groups[cur_group].tabId);
@@ -219,29 +219,27 @@ function cycleGroups(direction){
         gindex: cur_group,
         lindex: groups[cur_group].activeLink
     }, groups[cur_group].tabId);
+
+    sendNoti(groups[cur_group].name, groups[cur_group].path);
 }
 
 function cycleLinks(direction){
-    if(groups[cur_group].links[cur_link] < 1){
+    if(groups[cur_group].links.length < 1)
         return;
-    }
 
     if(direction == "up"){
-        if(cur_link == -1 || cur_link >= groups[cur_group].links.length - 1){
+        if(cur_link >= groups[cur_group].links.length - 1)
             cur_link = 0;
-        } else{
+        else
             cur_link++;
-        }
     }else if(direction =="down"){
-        if(cur_link == -1){
-            cur_link = 0;
-        }else if(cur_link == 0){
+        if(cur_link == 0)
             cur_link = groups[cur_group].links.length - 1;
-        } else{
+        else
             cur_link--;
-        }
     }
 
+    h();
     activateTab({
         gindex: cur_group,
         lindex: cur_link
@@ -251,14 +249,31 @@ function cycleLinks(direction){
         gindex: cur_group,
         lindex: cur_link
     }, groups[cur_group].tabId);
+
+    sendNoti(groups[cur_group].links[cur_link].name, groups[cur_group].links[cur_link].path);
 }
 
 function h(){
     console.log("Group: " + cur_group + ", Link: " + cur_link)
 }
 
-// TODO - would be really cool (needed?)
-function startModal(){
 
+function sendNoti(name, url){
+    // looks ugly
+    /*chrome.notifications.create(name, {
+        type: "basic",
+        title: title,
+        message: message,
+        iconUrl: "res/icon.png",
+        eventTime: Date.now() + 2
+    } ,function(){});*/
+
+    // to content script
+    // request from the content script to back.js to create the noti on the new page
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response) {
+        console.log(url);
+      });
+    });
 }
 

@@ -9,10 +9,18 @@
     "default_icon": "res/icon.png",
     "default_popup": "index.html"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["css/notification.css"],
+      "js": ["js/notification.js"]
+    }
+  ],
   "permissions": [
     "activeTab",
     "storage",
-    "tabs"
+    "tabs",
+    "notifications"
   ],
   "commands": {
     "cycle-groups-up": {
