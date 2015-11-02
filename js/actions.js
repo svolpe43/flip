@@ -47,13 +47,18 @@ function addGroup(){
 // add a link
 function addLink(){
     var name = document.getElementById("link-name").value;
-    var path = document.getElementById("link-path").value;
+    //var path = document.getElementById("link-path").value;
     var group = document.getElementById("link-group").value;
 
-    if(path == "" || name == "")
-        alert("Can't leave things blank, common.");
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        console.log(tabs);
+        path = tabs[0].url;
 
-    ship("add-link", "", new Link(name, path), group);
+        if(name == "")
+            alert("Can't leave things blank, common.");
+
+        ship("add-link", "", new Link(name, path), group);
+    });
 }
 
 // select group - if the tab for that group doesnt exist create one and set the url

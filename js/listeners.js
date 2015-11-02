@@ -17,7 +17,7 @@ function setListeners(){
 
     // add link
     var add_link = document.getElementById("add-link")
-    add_link.addEventListener("click", addLink);    
+    add_link.addEventListener("click", addLink);  
 
     // select group
     var select_group = document.getElementsByClassName('select-group');

@@ -123,6 +123,10 @@ function dispatch(data){
 	        selectGroup(data); break;
 	    case "select-link":
 	        selectLink(data); break;
+        case "get-current":
+            return{
+                name: groups[cur_group].links[cur_link].name,
+                path: groups[cur_group].links[cur_link].path};
 	}
 	saveChromeData();
 	return groups;
@@ -253,27 +257,15 @@ function cycleLinks(direction){
     sendNoti(groups[cur_group].links[cur_link].name, groups[cur_group].links[cur_link].path);
 }
 
-function h(){
-    console.log("Group: " + cur_group + ", Link: " + cur_link)
-}
-
-
 function sendNoti(name, url){
-    // looks ugly
-    /*chrome.notifications.create(name, {
-        type: "basic",
-        title: title,
-        message: message,
-        iconUrl: "res/icon.png",
-        eventTime: Date.now() + 2
-    } ,function(){});*/
-
-    // to content script
-    // request from the content script to back.js to create the noti on the new page
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response) {
         console.log(url);
       });
     });
+}
+
+function h(){
+    console.log("Group: " + cur_group + ", Link: " + cur_link)
 }
 
