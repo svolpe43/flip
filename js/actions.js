@@ -4,17 +4,6 @@
  *  This file holds the crud logic to talk to the background process.
  */
 
-// send the request to the background page
-function request(data){
-    chrome.runtime.sendMessage(data, function(response) {
-        if(response != null){
-            groups = response;
-            console.log(groups);
-        }
-        render();
-    });
-}
-
 // pack the information into an object and ship it to request()
 function ship(message, group, link, gindex, lindex){
     request({
@@ -23,6 +12,17 @@ function ship(message, group, link, gindex, lindex){
         link: link,
         gindex: gindex,
         lindex: lindex
+    });
+}
+
+// send the request to the background page
+function request(data){
+    chrome.runtime.sendMessage(data, function(response) {
+        if(response != null){
+            groups = response;
+            console.log(groups);
+        }
+        render();
     });
 }
 
@@ -47,11 +47,9 @@ function addGroup(){
 // add a link
 function addLink(){
     var name = document.getElementById("link-name").value;
-    //var path = document.getElementById("link-path").value;
     var group = document.getElementById("link-group").value;
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        console.log(tabs);
         path = tabs[0].url;
 
         if(name == "")

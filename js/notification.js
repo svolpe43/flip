@@ -6,9 +6,9 @@
  * 	little modal when a url changes.
  */
 
- var CLASS = "X7670h8I1fSg";
+var class_name = "X7670h8I1fSg";
+var duration = 2000;
 
-console.log("loaded!!");
 request({
     action: "get-current"
 });
@@ -26,7 +26,7 @@ function drawNotification(name, url){
 	html += "<p>" + url + "</p>";
 
 	var e = document.createElement('div');
-	e.className = CLASS;
+	e.className = class_name;
 	e.innerHTML = html;
 	document.getElementsByTagName("body")[0].appendChild(e);
 }
@@ -37,14 +37,14 @@ function request(data){
         if(response != null){
         	console.log(response);
          	drawNotification(response.name, response.path);
-         	setTimeout(clearNoti, 2000);
+         	setTimeout(clearNoti, duration);
         }
     });
 }
 
 function clearNoti(){
 	var body = document.getElementsByTagName("body")[0];
-	var div = document.getElementsByClassName(CLASS)[0];
+	var div = document.getElementsByClassName(class_name)[0];
 	if(div){
 		body.removeChild(div);
 	}

@@ -6,8 +6,6 @@
  * 	This process is the only communication to chrome's cross device storage.
  */
 
-var NOTI_DURATION;
-
 var groups = [];
 var cur_group = 0;
 var cur_link = 0;
@@ -49,7 +47,8 @@ function start(){
 
 function createTab(data){
     chrome.tabs.create({
-        url: groups[data.gindex].links[0].path
+        url: groups[data.gindex].links[0].path,
+        pinned: true
     }, function(tab){
         groups[data.gindex].activeLink = 0;
         groups[data.gindex].tabId = tab.id;
@@ -66,7 +65,7 @@ function activateTab(data, tab_id){
     });
 }
 
-function alterTab(data, tab_id){
+function updateTab(data, tab_id){
     chrome.tabs.get(groups[data.gindex].tabId, function(tab){
         if(!chrome.runtime.lastError){
             chrome.tabs.update(tab.id, {
@@ -157,7 +156,7 @@ function selectLink(data){
     var url = groups[data.gindex].links[data.lindex].path;
     var tab_id = groups[data.gindex].tabId;
 
-    alterTab(data, tab_id);
+    updateTab(data, tab_id);
 
     cur_group = data.gindex;
     cur_link = data.lindex;
@@ -219,7 +218,7 @@ function cycleGroups(direction){
         gindex: cur_group
     }, groups[cur_group].tabId);
 
-    alterTab({
+    updateTab({
         gindex: cur_group,
         lindex: groups[cur_group].activeLink
     }, groups[cur_group].tabId);
@@ -249,7 +248,7 @@ function cycleLinks(direction){
         lindex: cur_link
     }, groups[cur_group].tabId);
 
-    alterTab({
+    updateTab({
         gindex: cur_group,
         lindex: cur_link
     }, groups[cur_group].tabId);
