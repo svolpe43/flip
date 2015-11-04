@@ -272,7 +272,8 @@ function cycleLinks(direction){
 
 function sendNoti(name, url){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response){});
+        if(tabs.length >= 0)
+            chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response){});
     });
 }
 
