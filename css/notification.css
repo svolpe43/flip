@@ -9,6 +9,16 @@
 }
 
 .X7670h8I1fSg h4, .X7670h8I1fSg p{
-	color: #fff;
-	margin: 5px 0;
+	color: #fff !important;
+	margin: 5px 0 !important;
 }
+
+.X7670h8I1fSg h4{
+	font-weight: bold !important;
+	font-size: 14px !important;
+}
+
+.X7670h8I1fSg p{
+	font-size: 14px !important;
+}
+

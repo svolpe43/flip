@@ -1,4 +1,4 @@
-/* Framework */
+/* Framework https://svn.acquia.com/repos/engineering/fields/tags/$HOSTING_VERSION*/
 $input: #9A8EB8;
 $text: #B5C4D0;
 $background: #393939;
@@ -88,6 +88,11 @@ h5, h4, p{
 		height: 100%;
 		float: left;
 	}
+}
+
+.active{
+	background: #000;
+	border-radius: 3px;
 }
 
 #groups{

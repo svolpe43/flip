@@ -10,7 +10,7 @@ var class_name = "X7670h8I1fSg";
 var duration = 2000;
 
 request({
-    action: "get-current"
+    action: "get-current",
 });
 
 // listen to a notification

@@ -1,4 +1,4 @@
-/* Framework */
+/* Framework https://svn.acquia.com/repos/engineering/fields/tags/$HOSTING_VERSION*/
 html {
   margin: 0;
   padding: 0;
@@ -64,6 +64,10 @@ h5, h4, p {
     padding: 5px 5px;
     height: 100%;
     float: left; }
+
+.active {
+  background: #000;
+  border-radius: 3px; }
 
 #groups {
   margin: 0px 10px 10px 10px; }

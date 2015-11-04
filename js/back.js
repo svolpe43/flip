@@ -9,6 +9,7 @@
 var groups = [];
 var cur_group = 0;
 var cur_link = 0;
+var logging = false;
 
 start();
 
@@ -37,7 +38,7 @@ function start(){
 	getChromeData();
 
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	    sendResponse(dispatch(request));
+	    sendResponse(dispatch(request, sender));
 	});
 
     chrome.commands.onCommand.addListener(function(command) {
@@ -52,6 +53,14 @@ function createTab(data){
     }, function(tab){
         groups[data.gindex].activeLink = 0;
         groups[data.gindex].tabId = tab.id;
+
+        // todo clean and test this
+        /*tab.onRemoved(function(){
+            selectGroup({
+                gindex: cur_group++
+            });
+            h();
+        });*/
     });
 }
 
@@ -59,8 +68,6 @@ function activateTab(data, tab_id){
     chrome.tabs.update(tab_id, {active: true}, function(){
         if(chrome.runtime.lastError){
             createTab(data)
-        }else{
-            groups[data.gindex].activeLink = data.lindex;
         }
     });
 }
@@ -101,9 +108,11 @@ function flog(data){
 }
 
 // send the data to the correct action
-function dispatch(data){
-	if (true)
+function dispatch(data, sender){
+	if (logging)
         flog(data);
+
+    var sender_tab = (sender.tab) ? sender.tab.id : null;
 
 	switch (data.action) {
 	    case "add-group":
@@ -122,13 +131,23 @@ function dispatch(data){
 	        selectGroup(data); break;
 	    case "select-link":
 	        selectLink(data); break;
+        // send null back if the tab does not belong to one of our tabs
         case "get-current":
-            return{
-                name: groups[cur_group].links[cur_link].name,
-                path: groups[cur_group].links[cur_link].path};
+            var exists = false;
+            for(var i = 0; i < groups.length; i++){
+                if(groups[i].tabId == sender_tab){
+                    return{
+                        name: groups[cur_group].links[cur_link].name,
+                        path: groups[cur_group].links[cur_link].path};
+                }
+            }
+            return null;
 	}
 	saveChromeData();
-	return groups;
+	return {
+        groups: groups,
+        cur_link: cur_link,
+        cur_group: cur_group};
 }
 
 // add a group
@@ -213,14 +232,10 @@ function cycleGroups(direction){
         }
     }
 
-    h();
+    cur_link = groups[cur_group].activeLink;
+    
     activateTab({
         gindex: cur_group
-    }, groups[cur_group].tabId);
-
-    updateTab({
-        gindex: cur_group,
-        lindex: groups[cur_group].activeLink
     }, groups[cur_group].tabId);
 
     sendNoti(groups[cur_group].name, groups[cur_group].path);
@@ -241,8 +256,7 @@ function cycleLinks(direction){
         else
             cur_link--;
     }
-
-    h();
+    
     activateTab({
         gindex: cur_group,
         lindex: cur_link
@@ -258,9 +272,7 @@ function cycleLinks(direction){
 
 function sendNoti(name, url){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response) {
-        console.log(url);
-      });
+      chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response){});
     });
 }
 

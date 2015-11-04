@@ -19,10 +19,9 @@ function ship(message, group, link, gindex, lindex){
 function request(data){
     chrome.runtime.sendMessage(data, function(response) {
         if(response != null){
-            groups = response;
-            console.log(groups);
+            groups = response.groups;
         }
-        render();
+        render(response.cur_group, response.cur_link);
     });
 }
 

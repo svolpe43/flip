@@ -11,10 +11,9 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 - To view the console on the background process, click the "background page" link under the Flipper extension on this page
 
 #### TODO
-- after closing tab, reset the current group to one that is open (onRemove(selectGroup(group++)))
-- dont run notification on other pages, only respond to get-current when its a tab that we are controlling
-- confirm navigating away from current url wont affect it when you cycle (definitely shouldn't if it does)
-- bug - cur_link going NAN somewhere
+- strip all style form the injected div (may be fixed watch)
+- bug - cur_link going NAN somewhere (may be fixed watch)
 - saving input to populate on the next popup open
-- show the active group and link
+- show the active group and link (works needs UI update)
 - jira integration for automatic group creation based on current sprint, use a content script to scrape the data
+- after closing tab, reset the current group to one that is open (onRemove(selectGroup(group++))), dont think this is needed anymore

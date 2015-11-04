@@ -10,9 +10,14 @@ var group_input_div;
 var enable_group_edit_button;
 var enable_link_edit_button;
 
+var cur_group = -1;
+var cur_link = -1;
+
 // renders a list of groups and their links
-function render(){
-    console.log("rendering..");
+function render(_cur_group, _cur_link){
+
+    cur_group = _cur_group;
+    cur_link = _cur_link;
 
     // find the groups div
     groups_div = document.getElementById("groups");
@@ -20,7 +25,7 @@ function render(){
     groups_div.empty;
 
     // add all the groups to the groups div
-    groups_div.innerHTML = drawGroups();
+    groups_div.innerHTML = drawGroups(cur_group, cur_link);
     link_input_groups_div.innerHTML = groupOptions();
 
     setListeners();
@@ -46,7 +51,10 @@ function drawGroups(){
 
 // creates an html string for a single group
 function drawGroup(group_index){
-    var html = "<div class='group' id='group-" + group_index + "'>";
+    var html = "<div class='group"
+    if(cur_group == group_index)
+        html += " active";
+    html += "' id='group-" + group_index + "'>";
     html += "<h4 class='select-group'>" + groups[group_index].name + "</h4>";
     html += "<p class='group-path'>" + groups[group_index].path + "</p>";
     html += '<img class="remove-group" src="res/cross.png" alt="Remove">';
@@ -68,7 +76,10 @@ function drawLink(group_index, link_index){
     if(groups[group_index].links[link_index] == null){
         return "null bitch";
     }
-    var html = '<div class="link" id="link-' + group_index + '-' + link_index + '">';
+    var html = '<div class="link'
+    if(cur_link == link_index)
+        html += " active";
+    html += '" id="link-' + group_index + '-' + link_index + '">';
     html += '<h5 class="link-name select-link">' + groups[group_index].links[link_index].name + '</h5>';
     html += '<img class="remove-link" src="res/cross.png" alt="Remove">';
     html += '<img class="edit-link" src="res/check.png" alt="Edit">';
@@ -108,7 +119,7 @@ function showAddGroup(){
         collapseTop(true, "group");
     }else{
         addGroupMode();
-        expandTop();
+        expandTop("group");
     }
 }
 
@@ -118,7 +129,7 @@ function showAddLink(){
         collapseTop(true, "link");
     }else{
         addLinkMode();
-        expandTop();
+        expandTop("link");
     }
 }
 
@@ -146,14 +157,14 @@ function closeTop(){
 }
 
 // expand the top
-function expandTop(){
+function expandTop(type){
     if(expanded)
         return;
     expanded = true;
 
     // the div
     var div = document.getElementById('input');
-    var end = 110;
+    var end = (type == "group") ? 110 : 80;
 
     function expand(){
         var cur = parseInt(getComputedStyle(div).height);
@@ -190,7 +201,7 @@ function collapseTop(reopen, type){
                         addGroupMode();
                     else
                         addLinkMode();
-                    expandTop();
+                    expandTop(type);
                 }
             }
         }, 1);
