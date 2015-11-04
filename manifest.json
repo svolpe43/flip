@@ -14,6 +14,11 @@
       "matches": ["<all_urls>"],
       "css": ["css/notification.css"],
       "js": ["js/notification.js"]
+    },
+    {
+      "matches": ["https://backlog.acquia.com/*"],
+      "css": ["css/notification.css"],
+      "js": ["js/jira.js"]
     }
   ],
   "permissions": [

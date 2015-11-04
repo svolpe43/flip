@@ -53,7 +53,7 @@ function drawGroups(){
 function drawGroup(group_index){
     var html = "<div class='group"
     if(cur_group == group_index)
-        html += " active";
+        html += " active-group";
     html += "' id='group-" + group_index + "'>";
     html += "<h4 class='select-group'>" + groups[group_index].name + "</h4>";
     html += "<p class='group-path'>" + groups[group_index].path + "</p>";
@@ -77,8 +77,8 @@ function drawLink(group_index, link_index){
         return "null bitch";
     }
     var html = '<div class="link'
-    if(cur_link == link_index)
-        html += " active";
+    if(cur_group == group_index && cur_link == link_index)
+        html += " active-link";
     html += '" id="link-' + group_index + '-' + link_index + '">';
     html += '<h5 class="link-name select-link">' + groups[group_index].links[link_index].name + '</h5>';
     html += '<img class="remove-link" src="res/cross.png" alt="Remove">';
