@@ -11,11 +11,6 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 - To view the console on the background process, click the "background page" link under the Flipper extension on this page
 
 #### TODO
-- strip all style form the injected div (may be fixed watch)
-- bug - cur_link going NAN somewhere (may be fixed watch)
-- bug - current_link not updating in popup
 - saving input to populate on the next popup open
-- show the active group and link (works needs UI update)
-- broadcast the active group and link to popup on change
 - jira integration for automatic group creation based on current sprint, use a content script to scrape the data
 - after closing tab, reset the current group to one that is open (onRemove(selectGroup(group++))), dont think this is needed anymore

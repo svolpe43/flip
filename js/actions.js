@@ -61,7 +61,7 @@ function addLink(){
 // select group - if the tab for that group doesnt exist create one and set the url
 function selectGroup(event){
     var group = getGroupInfo(event);
-    ship("select-group", {}, {}, group);
+    ship("select-group", {}, {}, group, 0);
 }
 
 // changes the groups coresponding tab to the url specified by link
