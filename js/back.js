@@ -122,9 +122,6 @@ function dispatch(data, sender){
 	        selectGroup(data); break;
 	    case "select-link":
 	        selectLink(data); break;
-        // send null back if the tab does not belong to one of our tabs
-        case "get-current":
-            return getCurrent(sender);
 	}
 	saveChromeData();
 
@@ -134,20 +131,6 @@ function dispatch(data, sender){
         groups: groups,
         cur_link: cur_link,
         cur_group: cur_group};
-}
-
-// get the current active group and link
-function getCurrent(sender){
-    var sender_tab = (sender.tab) ? sender.tab.id : null;
-    var exists = false;
-    for(var i = 0; i < groups.length; i++){
-        if(groups[i].tabId == sender_tab){
-            return{
-                name: groups[cur_group].links[cur_link].name,
-                path: groups[cur_group].links[cur_link].path};
-        }
-    }
-    return null;
 }
 
 // add a group
@@ -224,8 +207,6 @@ function cycleGroups(direction){
     updateCycler();
     clearTimeout(commitTimeout);
     commitTimeout = setTimeout(commitGroup, COMMIT_ACTION_DUR);
-
-    // sendNoti(groups[cur_group].name, groups[cur_group].path);
 }
 
 function cycleLinks(direction){
@@ -237,8 +218,6 @@ function cycleLinks(direction){
     updateCycler();
     clearTimeout(commitTimeout);
     commitTimeout = setTimeout(commitLink, COMMIT_ACTION_DUR);
-
-    // sendNoti(groups[cur_group].links[cur_link].name, groups[cur_group].links[cur_link].path);
 }
 
 function commitGroup(){
@@ -276,17 +255,9 @@ function commitLink(){
 // this handles the logic for picking the next index
 function getNext(variable, direction, max){
     if(direction == "up"){
-        if(variable >= max - 1){
-            variable = 0;
-        } else{
-            variable++;
-        }
+        variable = (variable >= max - 1) ? 0 : variable++;
     }else if(direction == "down"){
-        if(variable == 0){
-            variable = max - 1;
-        } else{
-            variable--;
-        }
+        variable = (variable == 0) ? max - 1 : variable--;
     }
 
     return variable;
@@ -309,13 +280,6 @@ function removeCycler(){
         for(var i = 0; i < tabs.length; i ++){
             chrome.tabs.sendMessage(tabs[i].id, {removed: true}, function(response){});
         }
-    });
-}
-
-function sendNoti(name, url){
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        if(tabs.length >= 0)
-            chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response){});
     });
 }
 

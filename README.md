@@ -11,6 +11,7 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 - To view the console on the background process, click the "background page" link under the Flipper extension on this page
 
 #### TODO
-- saving input to populate on the next popup open
 - jira integration for automatic group creation based on current sprint, use a content script to scrape the data
-- after closing tab, reset the current group to one that is open (onRemove(selectGroup(group++))), dont think this is needed anymore
+- jira integration for dashboard tickets
+- better to use the timeout or another button to commit?
+- active group and link active colors and style
