@@ -11,6 +11,7 @@ var COMMIT_ACTION_DUR = 1000;
 var groups = [];
 var logging = false;
 
+// cycler and actives
 var cur_group = 0;
 var cur_link = 0;
 var new_group = 0;
@@ -254,18 +255,19 @@ function commitLink(){
 
 // this handles the logic for picking the next index
 function getNext(variable, direction, max){
+    console.log(variable);
     if(direction == "up"){
-        variable = (variable >= max - 1) ? 0 : variable++;
+        variable = (variable >= max - 1) ? 0 : variable + 1;
     }else if(direction == "down"){
-        variable = (variable == 0) ? max - 1 : variable--;
+        variable = (variable == 0) ? max - 1 : variable - 1;
     }
-
+    console.log(variable);
     return variable;
 }
 
 function updateCycler(){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        if(tabs.length >= 0){
+        if(tabs.length > 0){
             chrome.tabs.sendMessage(tabs[0].id, {
                 groups: groups,
                 group: new_group,

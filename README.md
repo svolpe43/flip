@@ -1,7 +1,7 @@
-## Flipper
+## Flip
 ###### A chrome workspace navigation tool.
 
-Flipper is a easy way to store and organize a bunch of frequently used urls. It creates an easy way
+Flip is a easy way to store and organize a bunch of frequently used urls. It creates an easy way
 to "flip" between urls very easily while letting Flipper handle finding and changing the tabs for you.
 
 ### Installation
@@ -15,3 +15,6 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 - jira integration for dashboard tickets
 - better to use the timeout or another button to commit?
 - active group and link active colors and style
+- add how to use and screen shots in readme
+
+#### Using Flip
