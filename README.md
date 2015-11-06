@@ -13,8 +13,10 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 #### TODO
 - jira integration for automatic group creation based on current sprint, use a content script to scrape the data
 - jira integration for dashboard tickets
+- auto height expand
 - better to use the timeout or another button to commit?
 - active group and link active colors and style
 - add how to use and screen shots in readme
+- add a makeFreeStanding action
 
 #### Using Flip
