@@ -1,7 +1,7 @@
-## Flipper
+## Flip
 ###### A chrome workspace navigation tool.
 
-Flipper is a easy way to store and organize a bunch of frequently used urls. It creates an easy way
+Flip is a easy way to store and organize a bunch of frequently used urls. It creates an easy way
 to "flip" between urls very easily while letting Flipper handle finding and changing the tabs for you.
 
 ### Installation
@@ -11,11 +11,17 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 - To view the console on the background process, click the "background page" link under the Flipper extension on this page
 
 #### TODO
-- strip all style form the injected div (may be fixed watch)
-- bug - cur_link going NAN somewhere (may be fixed watch)
-- bug - current_link not updating in popup
-- saving input to populate on the next popup open
-- show the active group and link (works needs UI update)
-- broadcast the active group and link to popup on change
+- adding a new group alerts - rip that out
+- active entity UI updates - colors, outline, only use content script css
+- change class/id names to cryptic names
+- build a way to add groups by json
+	- this will open up jira stuff and multi simultaneous tab additions
 - jira integration for automatic group creation based on current sprint, use a content script to scrape the data
-- after closing tab, reset the current group to one that is open (onRemove(selectGroup(group++))), dont think this is needed anymore
+- jira integration for dashboard tickets
+- auto height expand
+- better to use the timeout or another button to commit?
+- active group and link active colors and style
+- add how to use and screen shots in readme
+- add a makeFreeStanding action
+
+#### Using Flip

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Flipper",
+  "name": "Flip",
   "description": "Super cool awesome workspace manager for Chrome.",
   "version": "1.0",
 
@@ -12,12 +12,12 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["css/notification.css"],
-      "js": ["js/notification.js"]
+      "css": ["css/cycler.css"],
+      "js": ["js/cycler.js"]
     },
     {
       "matches": ["https://backlog.acquia.com/*"],
-      "css": ["css/notification.css"],
+      "css": ["css/cycler.css"],
       "js": ["js/jira.js"]
     }
   ],

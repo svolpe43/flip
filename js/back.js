@@ -6,10 +6,17 @@
  * 	This process is the only communication to chrome's cross device storage.
  */
 
+var COMMIT_ACTION_DUR = 3000;
+
 var groups = [];
+var logging = false;
+
+// cycler and actives
 var cur_group = 0;
 var cur_link = 0;
-var logging = false;
+var new_group = 0;
+var new_link = 0;
+var commitTimeout = null;
 
 start();
 
@@ -48,19 +55,11 @@ function start(){
 
 function createTab(data){
     chrome.tabs.create({
-        url: groups[data.gindex].links[0].path,
+        url: groups[data.gindex].links[data.lindex].path,
         pinned: true
     }, function(tab){
-        groups[data.gindex].activeLink = 0;
+        groups[data.gindex].activeLink = data.lindex;
         groups[data.gindex].tabId = tab.id;
-
-        // todo clean and test this
-        /*tab.onRemoved(function(){
-            selectGroup({
-                gindex: cur_group++
-            });
-            h();
-        });*/
     });
 }
 
@@ -102,17 +101,10 @@ function getChromeData(){
   });
 }
 
-// log and out all the data
-function flog(data){
-    console.log(data);
-}
-
 // send the data to the correct action
 function dispatch(data, sender){
 	if (logging)
         flog(data);
-
-    var sender_tab = (sender.tab) ? sender.tab.id : null;
 
 	switch (data.action) {
 	    case "add-group":
@@ -131,19 +123,11 @@ function dispatch(data, sender){
 	        selectGroup(data); break;
 	    case "select-link":
 	        selectLink(data); break;
-        // send null back if the tab does not belong to one of our tabs
-        case "get-current":
-            var exists = false;
-            for(var i = 0; i < groups.length; i++){
-                if(groups[i].tabId == sender_tab){
-                    return{
-                        name: groups[cur_group].links[cur_link].name,
-                        path: groups[cur_group].links[cur_link].path};
-                }
-            }
-            return null;
 	}
 	saveChromeData();
+
+    // so if you use a unrecognized action you get standard data
+    // popup rendering uses this for data
 	return {
         groups: groups,
         cur_link: cur_link,
@@ -175,6 +159,7 @@ function selectLink(data){
     var url = groups[data.gindex].links[data.lindex].path;
     var tab_id = groups[data.gindex].tabId;
 
+    activateTab(data, tab_id);
     updateTab(data, tab_id);
 
     cur_group = data.gindex;
@@ -218,45 +203,45 @@ function cycleGroups(direction){
     if(groups.length < 1)
         return;
 
-    if(direction == "up"){
-        if(cur_group >= groups.length - 1){
-            cur_group = 0;
-        } else{
-            cur_group++;
-        }
-    }else if(direction =="down"){
-        if(cur_group == 0){
-            cur_group = groups.length - 1;
-        } else{
-            cur_group--;
-        }
-    }
+    new_group = getNext(new_group, direction, groups.length);
 
-    cur_link = groups[cur_group].activeLink;
-    
-    activateTab({
-        gindex: cur_group
-    }, groups[cur_group].tabId);
-
-    sendNoti(groups[cur_group].name, groups[cur_group].path);
+    updateCycler();
+    clearTimeout(commitTimeout);
+    commitTimeout = setTimeout(commitGroup, COMMIT_ACTION_DUR);
 }
 
 function cycleLinks(direction){
-    if(groups[cur_group].links.length < 1)
+    if(groups[new_group].links.length < 1)
         return;
 
-    if(direction == "up"){
-        if(cur_link >= groups[cur_group].links.length - 1)
-            cur_link = 0;
-        else
-            cur_link++;
-    }else if(direction =="down"){
-        if(cur_link == 0)
-            cur_link = groups[cur_group].links.length - 1;
-        else
-            cur_link--;
-    }
-    
+    new_link = getNext(new_link, direction, groups[new_group].links.length);
+
+    updateCycler();
+    clearTimeout(commitTimeout);
+    commitTimeout = setTimeout(commitLink, COMMIT_ACTION_DUR);
+}
+
+function commitGroup(){
+    removeCycler();
+
+    cur_group = new_group;
+    cur_link = new_link;
+
+    // remember the link this group was using
+    cur_link = groups[cur_group].activeLink;
+
+    activateTab({
+        gindex: cur_group,
+        lindex: cur_link
+    }, groups[cur_group].tabId);
+}
+
+function commitLink(){
+    removeCycler();
+
+    cur_group = new_group;
+    cur_link = new_link;
+
     activateTab({
         gindex: cur_group,
         lindex: cur_link
@@ -266,15 +251,47 @@ function cycleLinks(direction){
         gindex: cur_group,
         lindex: cur_link
     }, groups[cur_group].tabId);
-
-    sendNoti(groups[cur_group].links[cur_link].name, groups[cur_group].links[cur_link].path);
 }
 
-function sendNoti(name, url){
+// this handles the logic for picking the next index
+function getNext(variable, direction, max){
+    if(direction == "up"){
+        variable = (variable >= max - 1) ? 0 : variable + 1;
+    }else if(direction == "down"){
+        variable = (variable == 0) ? max - 1 : variable - 1;
+    }
+    return variable;
+}
+
+function updateCycler(){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        if(tabs.length >= 0)
-            chrome.tabs.sendMessage(tabs[0].id, {name: name, url: url}, function(response){});
+        if(tabs.length > 0){
+            chrome.tabs.sendMessage(tabs[0].id, {
+                groups: groups,
+                group: new_group,
+                link: new_link
+            }, function(response){});
+        }
     });
+}
+
+function removeCycler(){
+    chrome.tabs.query({currentWindow: true}, function(tabs) {
+        for(var i = 0; i < tabs.length; i ++){
+            chrome.tabs.sendMessage(tabs[i].id, {removed: true}, function(response){});
+        }
+    });
+}
+
+/* Debugging stuff */
+
+// log and out all the data
+function flog(data){
+    console.log(data);
+}
+
+function n(){
+    console.log("New Group: " + new_group + ", New Link: " + new_link)
 }
 
 function h(){

@@ -13,6 +13,44 @@ var enable_link_edit_button;
 var cur_group = -1;
 var cur_link = -1;
 
+var logging = false;
+var curEditGroup = null;
+var curEditLink = null;
+var groups = [];
+
+// need a group object
+function Group(name, path){
+  this.links = [];
+  this.path = path;
+  this.name = name
+  this.tabId = 0;
+  this.activeLink = 0;
+}
+
+// need a link object?
+function Link(name, path){
+  this.name = name;
+  this.path = path;
+}
+
+function EditGroup(div, group){
+    this.div = div;
+    this.group = group;
+ }
+
+function EditLink(div, group, link){
+    this.div = div;
+    this.group = group;
+    this.link = link;
+ }
+
+// vanilla js
+document.addEventListener('DOMContentLoaded', function() {
+    // retrieve the data also calls render
+    getGroups();
+    getTopElements();
+});
+
 // renders a list of groups and their links
 function render(_cur_group, _cur_link){
 
