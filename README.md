@@ -11,6 +11,11 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 - To view the console on the background process, click the "background page" link under the Flipper extension on this page
 
 #### TODO
+- adding a new group alerts - rip that out
+- active entity UI updates - colors, outline, only use content script css
+- change class/id names to cryptic names
+- build a way to add groups by json
+	- this will open up jira stuff and multi simultaneous tab additions
 - jira integration for automatic group creation based on current sprint, use a content script to scrape the data
 - jira integration for dashboard tickets
 - auto height expand

@@ -6,7 +6,7 @@
  * 	This process is the only communication to chrome's cross device storage.
  */
 
-var COMMIT_ACTION_DUR = 1000;
+var COMMIT_ACTION_DUR = 3000;
 
 var groups = [];
 var logging = false;
@@ -255,13 +255,11 @@ function commitLink(){
 
 // this handles the logic for picking the next index
 function getNext(variable, direction, max){
-    console.log(variable);
     if(direction == "up"){
         variable = (variable >= max - 1) ? 0 : variable + 1;
     }else if(direction == "down"){
         variable = (variable == 0) ? max - 1 : variable - 1;
     }
-    console.log(variable);
     return variable;
 }
 

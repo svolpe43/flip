@@ -1,6 +1,5 @@
 /*
  *  actions.js
- *
  *  This file holds the crud logic to talk to the background process.
  */
 
@@ -35,7 +34,7 @@ function getGroups(){
 // add a group
 function addGroup(){
     var name = document.getElementById("group-name").value;
-    var path = document.getElementById("group-path").value;
+    var path = "";
 
     if(path == "" || name == "")
         alert("Can't leave things blank, common.");
@@ -85,7 +84,7 @@ function removeLink(event){
 function editGroup(event){
     var group = event.srcElement.id;
     var name = document.getElementById("edit-group-name").value;
-    var path = document.getElementById("edit-group-path").value;
+    var path = "";
 
     if(path == "" || name == "")
         alert("Can't leave things blank, common.");
