@@ -36,7 +36,7 @@ function addGroup(){
     var name = document.getElementById("group-name").value;
     var path = "";
 
-    if(path == "" || name == "")
+    if(name == "")
         alert("Can't leave things blank, common.");
 
     ship("add-group", new Group(name, path));
@@ -86,7 +86,7 @@ function editGroup(event){
     var name = document.getElementById("edit-group-name").value;
     var path = "";
 
-    if(path == "" || name == "")
+    if(name == "")
         alert("Can't leave things blank, common.");
 
     ship("edit-group", new Group(name, path), {}, group);

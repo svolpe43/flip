@@ -208,7 +208,7 @@ function expandTop(type){
         var cur = parseInt(getComputedStyle(div).height);
         setTimeout(function() {
             if (cur < end) {
-                div.style.height = cur + 2 + 'px';
+                div.style.height = cur + 3 + 'px';
                 expand();
             }
         }, 1);
@@ -231,7 +231,7 @@ function collapseTop(reopen, type){
         console.log(cur);
         setTimeout(function() {
             if (cur > end) {
-                div.style.height = cur - 2 + 'px';
+                div.style.height = cur - 3 + 'px';
                 collapse();
             }else{
                 if(reopen){
