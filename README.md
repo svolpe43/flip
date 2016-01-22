@@ -16,4 +16,9 @@ to "flip" between urls very easily while letting Flipper handle finding and chan
 - auto height expand
 - add how to use and screen shots in readme
 
+#### Select Options
+- hotkeys to cycle links and groups and a timer is set, commits at the end of the timer
+- hotkey to open and close cycler, mouse click select
+- hotkeys to cycle links and groups, another hotkey to commit the select
+
 #### Using Flip
