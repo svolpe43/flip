@@ -97,7 +97,9 @@ function getChromeData(){
   chrome.storage.sync.get("data", function(data) {
   	if(data.data){
   		groups = data.data;
-  	}
+  	}else{
+        console.log("No data from Chrome.");
+    }
   });
 }
 
@@ -188,69 +190,13 @@ function editLink(data){
 /* start hotkey stuff */
 function handleHotKeys(command){
     switch (command) {
-        case "cycle-groups-up":
-            cycleGroups("up"); break;
-        case "cycle-groups-down":
-            cycleGroups("down"); break;
-        case "cycle-links-up":
-            cycleLinks("up"); break;
-        case "cycle-links-down":
-            cycleLinks("down"); break;
+        case "open-cycler":
+            openCycler();
+            break;
+        case "close-cycler":
+            removeCycler();
+            break;
     }
-}
-
-function cycleGroups(direction){
-    if(groups.length < 1)
-        return;
-
-    new_group = getNext(new_group, direction, groups.length);
-
-    updateCycler();
-    clearTimeout(commitTimeout);
-    commitTimeout = setTimeout(commitGroup, COMMIT_ACTION_DUR);
-}
-
-function cycleLinks(direction){
-    if(groups[new_group].links.length < 1)
-        return;
-
-    new_link = getNext(new_link, direction, groups[new_group].links.length);
-
-    updateCycler();
-    clearTimeout(commitTimeout);
-    commitTimeout = setTimeout(commitLink, COMMIT_ACTION_DUR);
-}
-
-function commitGroup(){
-    removeCycler();
-
-    cur_group = new_group;
-    cur_link = new_link;
-
-    // remember the link this group was using
-    cur_link = groups[cur_group].activeLink;
-
-    activateTab({
-        gindex: cur_group,
-        lindex: cur_link
-    }, groups[cur_group].tabId);
-}
-
-function commitLink(){
-    removeCycler();
-
-    cur_group = new_group;
-    cur_link = new_link;
-
-    activateTab({
-        gindex: cur_group,
-        lindex: cur_link
-    }, groups[cur_group].tabId);
-
-    updateTab({
-        gindex: cur_group,
-        lindex: cur_link
-    }, groups[cur_group].tabId);
 }
 
 // this handles the logic for picking the next index
@@ -263,13 +209,14 @@ function getNext(variable, direction, max){
     return variable;
 }
 
-function updateCycler(){
+function openCycler(){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         if(tabs.length > 0){
             chrome.tabs.sendMessage(tabs[0].id, {
+                open: true,
                 groups: groups,
-                group: new_group,
-                link: new_link
+                group: cur_group,
+                link: cur_link
             }, function(response){});
         }
     });
@@ -278,7 +225,7 @@ function updateCycler(){
 function removeCycler(){
     chrome.tabs.query({currentWindow: true}, function(tabs) {
         for(var i = 0; i < tabs.length; i ++){
-            chrome.tabs.sendMessage(tabs[i].id, {removed: true}, function(response){});
+            chrome.tabs.sendMessage(tabs[i].id, {remove: true}, function(response){});
         }
     });
 }

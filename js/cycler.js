@@ -31,18 +31,50 @@ var css = "<style>.flip-container{background:#393939;border-radius:4px;position:
 // listen to back.js pushing cycler updates
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		console.log(request);
 		// catch the signal to remove the div
-		if(request.removed){
+		if(request.remove){
 			clearUI();
-			return;
-		}
-
-		groups = request.groups;
-		cur_group = request.group;
-		cur_link = request.link;
-		drawNotification();
+		}else if(request.open){
+            groups = request.groups;
+            cur_group = request.group;
+            cur_link = request.link;
+            drawNotification();
+        }
 });
+
+// pack the information into an object and ship it to request()
+function ship(message, group, link, gindex, lindex){
+    request({
+        action: message,
+        group: group,
+        link: link,
+        gindex: gindex,
+        lindex: lindex
+    });
+}
+
+// send the request to the background page
+function request(data){
+    chrome.runtime.sendMessage(data, function(response) {
+        clearUI();
+    });
+}
+
+// select group - if the tab for that group doesnt exist create one and set the url
+function selectGroup(event){
+    console.log("selected group");
+    var group = getGroupInfo(event);
+    console.log(group);
+    ship("select-group", {}, {}, group, 0);
+}
+
+// changes the groups coresponding tab to the url specified by link
+function selectLink(event){
+    console.log("selected link");
+    var indexes = getLinkInfo(event);
+    console.log(indexes);
+    ship("select-link", {}, {}, indexes.group, indexes.link);
+}
 
 // inject out html string into the body element
 function drawNotification(){
@@ -51,8 +83,6 @@ function drawNotification(){
     // create the shadow elements
 	var host = document.createElement('div');
     var template = document.createElement('template');
-
-    console.log("hello");
 
     // set up the elements
 	host.id = host_id;
@@ -66,6 +96,16 @@ function drawNotification(){
     var shadow = host.createShadowRoot();
     var clone = document.importNode(template.content, true);
     shadow.appendChild(clone);
+
+    var select_groups = shadow.querySelectorAll('.select-group');
+    for(i = 0; i < select_groups.length; i++) {
+        select_groups[i].addEventListener('click', selectGroup);
+    }
+
+    var select_links = shadow.querySelectorAll('.select-link');
+    for(i = 0; i < select_links.length; i++) {
+        select_links[i].addEventListener('click', selectLink);
+    }
 }
 
 // rip our div out of the body element
@@ -112,12 +152,26 @@ function drawLink(group_index, link_index){
     if(!groups[group_index].links[link_index])
         return "";
 
-    var html = '<div class="link'
+    var html = '<div class="link';
     html += (cur_group == group_index && cur_link == link_index) ? " active-link" : "";
     html += '" id="link-' + group_index + '-' + link_index + '">';
     html += '<h5 class="link-name select-link">' + groups[group_index].links[link_index].name + '</h5>';
-    html += "</div>";
+    html += '</div>';
     return html;
+}
+
+// extract the group and link index from html
+function getLinkInfo(event){
+    var indexes = event.srcElement.parentNode.id.split("-");
+    return {
+        group: indexes[1],
+        link: indexes[2]
+    };
+}
+
+// extract the group index from the html
+function getGroupInfo(event){
+    return event.srcElement.parentNode.id.split("-")[1];
 }
 
 
